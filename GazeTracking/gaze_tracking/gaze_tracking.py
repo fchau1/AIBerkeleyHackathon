@@ -24,7 +24,8 @@ class GazeTracking(object):
 
         # _predictor is used to get facial landmarks of a given face
         cwd = os.path.abspath(os.path.dirname(__file__))
-        model_path = os.path.abspath(os.path.join(cwd, "trained_models/shape_predictor_68_face_landmarks.dat"))
+        model_path = os.path.abspath(os.path.join(
+            cwd, "trained_models/shape_predictor_68_face_landmarks.dat"))
         self._predictor = dlib.shape_predictor(model_path)
 
     @property
@@ -82,8 +83,10 @@ class GazeTracking(object):
         the center is 0.5 and the extreme left is 1.0
         """
         if self.pupils_located:
-            pupil_left = self.eye_left.pupil.x / (self.eye_left.center[0] * 2 - 10)
-            pupil_right = self.eye_right.pupil.x / (self.eye_right.center[0] * 2 - 10)
+            pupil_left = self.eye_left.pupil.x / \
+                (self.eye_left.center[0] * 2 - 10)
+            pupil_right = self.eye_right.pupil.x / \
+                (self.eye_right.center[0] * 2 - 10)
             return (pupil_left + pupil_right) / 2
 
     def vertical_ratio(self):
@@ -92,19 +95,21 @@ class GazeTracking(object):
         the center is 0.5 and the extreme bottom is 1.0
         """
         if self.pupils_located:
-            pupil_left = self.eye_left.pupil.y / (self.eye_left.center[1] * 2 - 10)
-            pupil_right = self.eye_right.pupil.y / (self.eye_right.center[1] * 2 - 10)
+            pupil_left = self.eye_left.pupil.y / \
+                (self.eye_left.center[1] * 2 - 10)
+            pupil_right = self.eye_right.pupil.y / \
+                (self.eye_right.center[1] * 2 - 10)
             return (pupil_left + pupil_right) / 2
 
     def is_right(self):
         """Returns true if the user is looking to the right"""
         if self.pupils_located:
-            return self.horizontal_ratio() <= 0.35
+            return self.horizontal_ratio() <= 0.49
 
     def is_left(self):
         """Returns true if the user is looking to the left"""
         if self.pupils_located:
-            return self.horizontal_ratio() >= 0.65
+            return self.horizontal_ratio() >= 0.51
 
     def is_center(self):
         """Returns true if the user is looking to the center"""
@@ -114,7 +119,8 @@ class GazeTracking(object):
     def is_blinking(self):
         """Returns true if the user closes his eyes"""
         if self.pupils_located:
-            blinking_ratio = (self.eye_left.blinking + self.eye_right.blinking) / 2
+            blinking_ratio = (self.eye_left.blinking +
+                              self.eye_right.blinking) / 2
             return blinking_ratio > 3.8
 
     def annotated_frame(self):
@@ -127,7 +133,9 @@ class GazeTracking(object):
             x_right, y_right = self.pupil_right_coords()
             cv2.line(frame, (x_left - 5, y_left), (x_left + 5, y_left), color)
             cv2.line(frame, (x_left, y_left - 5), (x_left, y_left + 5), color)
-            cv2.line(frame, (x_right - 5, y_right), (x_right + 5, y_right), color)
-            cv2.line(frame, (x_right, y_right - 5), (x_right, y_right + 5), color)
+            cv2.line(frame, (x_right - 5, y_right),
+                     (x_right + 5, y_right), color)
+            cv2.line(frame, (x_right, y_right - 5),
+                     (x_right, y_right + 5), color)
 
         return frame
