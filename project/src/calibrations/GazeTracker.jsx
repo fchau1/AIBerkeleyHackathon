@@ -105,7 +105,7 @@ const GazeTracker = ({ setIsCalibrated }) => {
         backgroundColor: "white", // equivalent to bg-base-300
         borderRadius: "0.5rem", // equivalent to rounded-box
         padding: "1rem", // equivalent to place-items-center
-        border: "2px solid white", // equivalent to border-2 border-white
+        border: "2px solid black", // equivalent to border-2 border-white
         verticalAlign: "middle", // equivalent to align-middle
       }}
     >

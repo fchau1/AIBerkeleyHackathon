@@ -3,11 +3,42 @@ import "./Calibration.css";
 
 const Calibration = ({ webgazer, onCalibrationComplete }) => {
   const [calibrationPoints, setCalibrationPoints] = useState({});
+  const [gazeData, setGazeData] = useState({});
+
   const calibrationRefs = useRef([]);
 
   useEffect(() => {
     showCalibrationPoints();
-  }, []);
+
+    // Set up WebGazer to collect gaze data
+    if (webgazer) {
+      webgazer.setGazeListener((data, elapsedTime) => {
+        if (data == null) return;
+        const { x, y } = data;
+        const activePointId = Object.keys(calibrationPoints).find(
+          (key) => calibrationPoints[key] > 0 && calibrationPoints[key] < 5
+        );
+        if (activePointId) {
+          setGazeData((prevData) => {
+            const newData = { ...prevData };
+            if (!newData[activePointId]) {
+              newData[activePointId] = [];
+            }
+            newData[activePointId].push({ x, y });
+            return newData;
+          });
+        }
+      }).begin();
+    }
+
+    return () => {
+      if (webgazer) {
+        webgazer.end();
+      }
+    };
+  }, [webgazer, calibrationPoints]);
+
+  
 
   const showCalibrationPoints = () => {
     calibrationRefs.current.forEach((point) => {

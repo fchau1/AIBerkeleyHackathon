@@ -21,12 +21,12 @@
     display: none;
   }
   
-  #Pt1 { top: 20px; left: 20px; }
-  #Pt2 { top: 20px; left: 37%; }
-  #Pt3 { top: 20px; right: 27%; }
-  #Pt4 { top: 50%; left: 20px; }
-  #Pt5 { top: 50%; left: 37%; }
-  #Pt6 { top: 50%; right: 27%; }
-  #Pt7 { bottom: 20px; left: 20px; }
-  #Pt8 { bottom: 20px; left: 37%; }
-  #Pt9 { bottom: 20px; right: 27%; }
+  #Pt1 { top: 0px; left: 1px; }
+  #Pt2 { top: 0px; left: 36%; }
+  #Pt3 { top: 0px; right: 25.5%; }
+  #Pt4 { top: 50%; left: 1px; }
+  #Pt5 { top: 50%; left: 36%; }
+  #Pt6 { top: 50%; right: 25.5%; }
+  #Pt7 { bottom: 0px; left: 1px; }
+  #Pt8 { bottom: 0px; left: 36%; }
+  #Pt9 { bottom: 0px; right: 25.5%; }
