@@ -7,18 +7,14 @@ import Tile from "./Tile";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import IconButton from "@mui/material/IconButton";
-import GazeTracker from "../calibrations/GazeTracker";
 
 interface PDFPanelProps {
   extractedText: string;
 }
 
 const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
-  const [isCalibrated, setIsCalibrated] = useState(false);
   const words = extractedText?.split(" ");
 
-  // const containerRef = useRef<HTMLDivElement>(null);
-  const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
 
   const tiles: TileType[] = words.map(
     (word): TileType => ({
@@ -29,24 +25,10 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
     })
   );
 
-  //   console.log("tile", JSON.stringify(tiles, null, 2));
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowHeight(window.innerHeight);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <>
-      {isCalibrated ? (
+      {/* {isCalibrated ? ( */}
         <div
           style={{
             display: "flex",
@@ -86,9 +68,29 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
             </IconButton>
           </div>
         </div>
-      ) : (
+        <div
+            style={{
+              height: "1px",
+              backgroundColor: "#d1d5db",
+              margin: "1rem 0",
+            }}
+          ></div>{" "}
+          <div
+            style={{
+              display: "grid",
+              height: "100%",
+              padding: "1rem",
+              width: "25%",
+              backgroundColor: "#2d3748",
+              borderRadius: "0.5rem",
+              placeItems: "center",
+            }}
+          ></div>
+        
+        
+      {/* ): (
         <GazeTracker windowHeight={windowHeight}/>
-      )}
+      )} */}
     </>
   );
 };
