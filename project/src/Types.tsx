@@ -6,10 +6,10 @@ export interface Coordinate {
 }
 
 export interface TileType {
-    coordinates?: Coordinate
+    id: number;
+    coordinates?: Coordinate;
     isHighlighted: boolean;
     word: string;
-    totalWidth: number;
 }
 
 export interface TileProps {

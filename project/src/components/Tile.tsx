@@ -21,7 +21,6 @@ const Tile: React.FC<TileProps> = ({ tile }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  tile.totalWidth = tile.word.length * letterWidth + letterWidth;
 
   return (
     <div

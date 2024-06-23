@@ -5,6 +5,7 @@ import Tile from "./Tile";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import IconButton from "@mui/material/IconButton";
+import ChatPanel from './ChatPanel.js';
 
 interface PDFPanelProps {
   extractedText: string;
@@ -52,21 +53,19 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
   );
 
   const tiles = currentPageText.split(/\s+/).map((word, index) => ({
+    id: index,
     isHighlighted: true,
     word: word,
-    totalWidth: 0,
   }));
 
   return (
     <>
-      {/* {isCalibrated ? ( */}
+   
       <div
         style={{
           display: "flex",
-
           flexDirection: "column",
           justifyContent: "space-between",
-          // margin: "auto",
           borderRadius: "0.5rem",
           padding: "1rem",
           alignItems: "center",
@@ -91,7 +90,7 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
             gap: "0.5rem",
             alignItems: "flex-start",
             overflowY: "auto",
-            fontSize: "3.75rem",
+            fontSize: "7.75rem",
             lineHeight: "1.375",
             textAlign: "left",
           }}
@@ -137,10 +136,7 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
           borderRadius: "0.5rem",
           placeItems: "center",
         }}
-      ></div>
-      {/* ): (
-        <GazeTracker windowHeight={windowHeight}/>
-      )} */}
+      ><ChatPanel/></div>
     </>
   );
 };

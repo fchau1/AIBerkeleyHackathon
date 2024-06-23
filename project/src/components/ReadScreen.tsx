@@ -10,7 +10,7 @@ interface ReadScreenProps {
 }
 
 const ReadScreen: React.FC<ReadScreenProps> = ({ extractedText }) => {
-  const [isCalibrated, setIsCalibrated] = useState(true);
+  const [isCalibrated, setIsCalibrated] = useState(false);
 
 
   return (
@@ -18,7 +18,7 @@ const ReadScreen: React.FC<ReadScreenProps> = ({ extractedText }) => {
       {isCalibrated ? (
         <PDFPanel extractedText={extractedText} />
       ) : (
-        <GazeTracker/>
+        <GazeTracker setIsCalibrated={setIsCalibrated}/>
       )}
     </>
   );
