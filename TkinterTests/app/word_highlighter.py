@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter.font import Font
 
+
 class WordHighlighterApp:
     def __init__(self, master):
         self.master = master
@@ -16,7 +17,8 @@ class WordHighlighterApp:
 
         # Now adjust the canvas to fill the window and configure it to be scrollable
         # Notice the scrollbar is now defined before being used here
-        self.canvas = tk.Canvas(master, bg="white", yscrollcommand=self.scrollbar.set)
+        self.canvas = tk.Canvas(
+            master, bg="white", yscrollcommand=self.scrollbar.set)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         # Configure the scrollbar to command the canvas yview
@@ -24,11 +26,13 @@ class WordHighlighterApp:
 
         # Scaling factor and font settings remain unchanged...
         self.scale_factor = 4
-        self.font = ("Arial", int(12 * self.scale_factor))  # Scale up the font size
+        # Scale up the font size
+        self.font = ("Arial", int(12 * self.scale_factor))
 
         # Add a frame inside the canvas to hold the content
         self.frame = tk.Frame(self.canvas, bg="white")
-        self.canvas_frame = self.canvas.create_window((0, 0), window=self.frame, anchor="nw")
+        self.canvas_frame = self.canvas.create_window(
+            (0, 0), window=self.frame, anchor="nw")
 
         # Provided Lorem Ipsum text and other initializations...
         self.text = ("Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
@@ -38,8 +42,9 @@ class WordHighlighterApp:
                      "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset "
                      "sheets containing Lorem Ipsum passages, and more recently with desktop publishing software "
                      "like Aldus PageMaker including versions of Lorem Ipsum.")
-        
-        self.words = self.split_text_into_words(self.text, start_x=10, start_y=50, line_height=20 * self.scale_factor)
+
+        self.words = self.split_text_into_words(
+            self.text, start_x=10, start_y=50, line_height=20 * self.scale_factor)
         self.draw_words()
 
         # Bind the <Motion> event to the canvas to track mouse movements
@@ -72,9 +77,12 @@ class WordHighlighterApp:
         for word, x, y in self.words:
             font = Font(family="Arial", size=int(12 * self.scale_factor))
             word_width = font.measure(word)
-            bbox = (x, y, x + word_width + 2, y + 20 * self.scale_factor)  # Example bbox calculation
-            box_id = self.canvas.create_rectangle(bbox, outline="", fill="", tags="wordbox")
-            text_id = self.canvas.create_text(x, y, text=word, anchor="nw", font=self.font, tags="wordtext")
+            bbox = (x, y, x + word_width + 2, y + 20 *
+                    self.scale_factor)  # Example bbox calculation
+            box_id = self.canvas.create_rectangle(
+                bbox, outline="", fill="", tags="wordbox")
+            text_id = self.canvas.create_text(
+                x, y, text=word, fill="black", anchor="nw", font=self.font, tags="wordtext")
             self.word_boxes.append((box_id, text_id, bbox, word))
 
     def track_mouse(self, event):
@@ -83,8 +91,9 @@ class WordHighlighterApp:
 
     def update_highlights(self, new_coords):
         # Translate window coordinates (new_coords) to canvas coordinates
-        canvas_coords = self.canvas.canvasx(new_coords[0]), self.canvas.canvasy(new_coords[1])
-        
+        canvas_coords = self.canvas.canvasx(
+            new_coords[0]), self.canvas.canvasy(new_coords[1])
+
         # Iterate through the stored words and update highlights based on canvas_coords
         for box_id, text_id, bbox, word in self.word_boxes:
             if bbox[0] <= canvas_coords[0] <= bbox[2] and bbox[1] <= canvas_coords[1] <= bbox[3]:
@@ -92,14 +101,13 @@ class WordHighlighterApp:
             else:
                 self.canvas.itemconfig(box_id, fill="")
 
-
     def on_mousewheel(self, event):
         """Handle mouse wheel scroll for Windows and Linux."""
         # For MacOS, you might need to use event.delta directly
         self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = WordHighlighterApp(root)
     root.mainloop()
-
