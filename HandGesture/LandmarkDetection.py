@@ -5,6 +5,14 @@ import HandTrackingModule as htm
 pTime = 0
 cTime = 0
 detector = htm.handDetector(detectionCon=0.75)
+gesture_times = {
+    "next": 0,
+    "prev": 0,
+    "question": 0,
+    "note": 0,
+    "capture": 0
+}
+
 
 
 def check_next(lmList):
@@ -79,8 +87,28 @@ while True:
 
         else:
             print(lmList)
+    if lmList:
+        current_time = time.time()
+        gestures = {
+            "next": check_next(lmList),
+            "prev": check_prev(lmList),
+            "question": check_question(lmList),
+            "note": check_note(lmList),
+            "capture": check_capture(lmList)
+        }
+
+        for gesture, detected in gestures.items():
+            if detected:
+                if gesture_times[gesture] == 0:
+                    gesture_times[gesture] = current_time 
+                elif current_time - gesture_times[gesture] >= 2:
+                    print(f"{gesture.capitalize()} gesture held for 2 seconds.")
+                    gesture_times[gesture] = 0 
+            else:
+                gesture_times[gesture] = 0 
 
     cTime = time.time()
+
     fps = 1 / (cTime - pTime)
     pTime = cTime
 
