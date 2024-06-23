@@ -1,5 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import PDFPanel from "./components/PDFPanel";
+import pdfToText from "react-pdftotext";
 
 function App() {
   const [submitPDF, setSubmitPDF] = useState(true);
@@ -21,21 +23,14 @@ const handleFileChange = (event) => {
     },[submitPDF])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: "flex", flexDirection: "row", height: "95vh", width: "100%",  boxSizing: "border-box" }}>
+      {submitPDF ? <>
+      <PDFPanel extractedText={extractedText} />
+        <div style={{ height: "1px", backgroundColor: "#d1d5db", margin: "1rem 0" }}></div> {/* equivalent to divider */}
+        <div style={{ display: "grid", height: "100%", padding: "1rem", width: "25%", backgroundColor: "#2d3748", borderRadius: "0.5rem", placeItems: "center" }}></div>
+        </> :
+        <input type="file" accept="application/pdf" onChange={handleFileChange} className="file-input file-input-xs file-input-bordered file-input-primary w-full grid card bg-base-300 rounded-box place-items-center" />
+      }
     </div>
   );
 }
