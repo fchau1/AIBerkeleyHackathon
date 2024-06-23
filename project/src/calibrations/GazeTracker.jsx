@@ -91,63 +91,54 @@ const GazeTracker = ({ setIsCalibrated }) => {
 
   return (
     <>
-      <div
-        ref={leftPanelRef}
-        className="gaze-tracker-container"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: "0.5rem",
-          flexWrap: "wrap",
-          height: `100%`,
-          width: "75%", // equivalent to w-8/10
-          backgroundColor: "#2d3748", // equivalent to bg-base-300
-          borderRadius: "0.5rem", // equivalent to rounded-box
-          padding: "1rem", // equivalent to place-items-center
-          border: "2px solid white", // equivalent to border-2 border-white
-          verticalAlign: "middle", // equivalent to align-middle
-        }}
-      >
-        <div className="controls">
-          {/* <button
-          onClick={startCalibration}
-          disabled={!webgazerReady || calibrating}
-        >
-          Start Calibration
-        </button> */}
-        </div>
-        {calibrating && (
-          <Calibration
-            webgazer={window.webgazer}
-            onCalibrationComplete={handleCalibrationComplete}
-          />
-        )}
-        <div ref={gazeRef} className="gaze-dot" />
-      </div>
-      <div
-        style={{
-          height: "1px",
-          backgroundColor: "#d1d5db",
-          margin: "1rem 0",
-        }}
-      ></div>{" "}
-      <div
-        style={{
-          display: "grid",
-          height: "100%",
-          padding: "1rem",
-          width: "25%",
-          backgroundColor: "#2d3748",
-          borderRadius: "0.5rem",
-          placeItems: "center",
-        }}
-      >
-        <button
-          onClick={startCalibration}
-          style={{ fontSize: "70px", padding: "20px", borderRadius: "25px" }}
-          disabled={!webgazerReady || calibrating}
-        >
+    <div
+    ref={leftPanelRef}
+      className="gaze-tracker-container"
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: "0.5rem",
+        flexWrap: "wrap",
+        height: `100%`,
+        width: "75%", // equivalent to w-8/10
+        backgroundColor: "white", // equivalent to bg-base-300
+        borderRadius: "0.5rem", // equivalent to rounded-box
+        padding: "1rem", // equivalent to place-items-center
+        border: "2px solid white", // equivalent to border-2 border-white
+        verticalAlign: "middle", // equivalent to align-middle
+      }}
+    >
+      {calibrating && (
+        <Calibration
+          webgazer={window.webgazer}
+          onCalibrationComplete={handleCalibrationComplete}
+        />
+      )}
+      <div ref={gazeRef} className="gaze-dot" />
+    </div>
+    <div
+    style={{
+      height: "1px",
+      backgroundColor: "#ff007f",
+      margin: "1rem 0",
+    }}
+  ></div>{" "}
+  <div
+    style={{
+      display: "grid",
+      height: "100%",
+      padding: "1rem",
+      width: "25%",
+      backgroundColor: "#white",
+      // borderRadius: "0.5rem",
+      placeItems: "center",
+      borderLeft: "7px solid #ff007f", 
+    }}
+  >
+    <button onClick={startCalibration}
+          style={{fontSize:"70px", padding: "20px", borderRadius: "25px", backgroundColor: "#ff007f", color:"white"}}
+          disabled={!webgazerReady || calibrating}>
           Start Calibration
         </button>
       </div>
