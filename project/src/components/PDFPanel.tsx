@@ -38,11 +38,11 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
             flexWrap: "wrap",
             height: `100%`,
             width: "75%", // equivalent to w-8/10
-            backgroundColor: "#2d3748", // equivalent to bg-base-300
+            backgroundColor: "white", // equivalent to bg-base-300
             borderRadius: "0.5rem", // equivalent to rounded-box
             padding: "1rem", // equivalent to place-items-center
             fontSize: "3.75rem", // equivalent to text-6xl
-            border: "2px solid white", // equivalent to border-2 border-white
+            border: "6px solid #ffafbd", // equivalent to border-2 border-white
             textAlign: "left", // equivalent to text-left
             lineHeight: "1.375", // equivalent to leading-snug
             verticalAlign: "middle", // equivalent to align-middle
@@ -81,7 +81,7 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
               height: "100%",
               padding: "1rem",
               width: "25%",
-              backgroundColor: "#2d3748",
+              backgroundColor: "#ff007f",
               borderRadius: "0.5rem",
               placeItems: "center",
             }}

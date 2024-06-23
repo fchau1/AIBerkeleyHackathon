@@ -10,7 +10,7 @@ interface ReadScreenProps {
 }
 
 const ReadScreen: React.FC<ReadScreenProps> = ({ extractedText }) => {
-  const [isCalibrated, setIsCalibrated] = useState(false);
+  const [isCalibrated, setIsCalibrated] = useState(true);
 
 
   return (
