@@ -12,7 +12,7 @@ interface PDFPanelProps {
 }
 
 const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
-  const [isCalibrated, setIsCalibrated] = useState(true);
+  const [isCalibrated, setIsCalibrated] = useState(false);
   const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
 
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
