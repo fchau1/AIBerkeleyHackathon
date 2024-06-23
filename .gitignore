@@ -1,2 +1,4 @@
 .idea
 */node_modules
+GazeTracking/node_modules
+GazeTracking/package-lock.json
