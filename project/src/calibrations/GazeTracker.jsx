@@ -1,11 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
 import Calibration from "./Calibration";
 import "./GazeTracker.css";
+import ReadingTracker from "./readingTracker";
 
-const GazeTracker = ({setIsCalibrated}) => {
+const GazeTracker = ({ setIsCalibrated }) => {
   const gazeRef = useRef(null);
+  const leftPanelRef = useRef(null);
   const [webgazerReady, setWebgazerReady] = useState(false);
   const [calibrating, setCalibrating] = useState(false);
+  const readingTracker = useRef(new ReadingTracker({ rows: 5, cols: 5 }));
+
+  useEffect(() => {
+    if (leftPanelRef.current) {
+      const rect = leftPanelRef.current.getBoundingClientRect();
+
+      const reactPoints = new Map([
+        [1, (rect.left, rect.top)],
+        [2, ((rect.right - rect.left) / 2, rect.top)],
+        [3, (rect.right, rect.top)],
+        [4, (rect.left, (rect.top - rect.bottom) / 2)],
+        [5, ((rect.right - rect.left) / 2, (rect.top - rect.bottom) / 2)],
+        [6, (rect.right, (rect.top - rect.bottom) / 2)],
+        [7, (rect.left, rect.bottom)],
+        [8, ((rect.right - rect.left) / 2, rect.bottom)],
+        [9, (rect.right, rect.bottom)],
+      ]);
+
+      readingTracker.current.calcDiff(reactPoints);
+    }
+  }, []);
 
   useEffect(() => {
     const initWebgazer = async () => {
@@ -18,11 +41,11 @@ const GazeTracker = ({setIsCalibrated}) => {
               const { x, y } = data;
               const gazeDot = gazeRef.current;
 
-              if (gazeDot) {
-                gazeDot.style.left = x + "px";
-                gazeDot.style.top = y + "px";
-                gazeDot.style.display = "block";
-              }
+              // if (gazeDot) {
+              //   gazeDot.style.left = x + "px";
+              //   gazeDot.style.top = y + "px";
+              //   gazeDot.style.display = "block";
+              // }
             })
             .begin();
 
@@ -61,71 +84,74 @@ const GazeTracker = ({setIsCalibrated}) => {
   const handleCalibrationComplete = () => {
     setCalibrating(false);
     console.log("Calibration complete");
-    setIsCalibrated(true)
+    setIsCalibrated(true);
     // You can add additional logic here, such as storing calibration data
     window.webgazer.showPredictionPoints(false); // Hide prediction points after calibration
   };
 
   return (
     <>
-    <div
-      className="gaze-tracker-container"
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        gap: "0.5rem",
-        flexWrap: "wrap",
-        height: `100%`,
-        width: "75%", // equivalent to w-8/10
-        backgroundColor: "#2d3748", // equivalent to bg-base-300
-        borderRadius: "0.5rem", // equivalent to rounded-box
-        padding: "1rem", // equivalent to place-items-center
-        border: "2px solid white", // equivalent to border-2 border-white
-        verticalAlign: "middle", // equivalent to align-middle
-      }}
-    >
-      <div className="controls">
-        {/* <button
+      <div
+        ref={leftPanelRef}
+        className="gaze-tracker-container"
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "0.5rem",
+          flexWrap: "wrap",
+          height: `100%`,
+          width: "75%", // equivalent to w-8/10
+          backgroundColor: "#2d3748", // equivalent to bg-base-300
+          borderRadius: "0.5rem", // equivalent to rounded-box
+          padding: "1rem", // equivalent to place-items-center
+          border: "2px solid white", // equivalent to border-2 border-white
+          verticalAlign: "middle", // equivalent to align-middle
+        }}
+      >
+        <div className="controls">
+          {/* <button
           onClick={startCalibration}
           disabled={!webgazerReady || calibrating}
         >
           Start Calibration
         </button> */}
+        </div>
+        {calibrating && (
+          <Calibration
+            webgazer={window.webgazer}
+            onCalibrationComplete={handleCalibrationComplete}
+          />
+        )}
+        <div ref={gazeRef} className="gaze-dot" />
       </div>
-      {calibrating && (
-        <Calibration
-          webgazer={window.webgazer}
-          onCalibrationComplete={handleCalibrationComplete}
-        />
-      )}
-      <div ref={gazeRef} className="gaze-dot" />
-    </div>
-    <div
-    style={{
-      height: "1px",
-      backgroundColor: "#d1d5db",
-      margin: "1rem 0",
-    }}
-  ></div>{" "}
-  <div
-    style={{
-      display: "grid",
-      height: "100%",
-      padding: "1rem",
-      width: "25%",
-      backgroundColor: "#2d3748",
-      borderRadius: "0.5rem",
-      placeItems: "center",
-    }}
-  >
-    <button onClick={startCalibration}
-          style={{fontSize:"70px", padding: "20px", borderRadius: "25px"}}
-          disabled={!webgazerReady || calibrating}>
+      <div
+        style={{
+          height: "1px",
+          backgroundColor: "#d1d5db",
+          margin: "1rem 0",
+        }}
+      ></div>{" "}
+      <div
+        style={{
+          display: "grid",
+          height: "100%",
+          padding: "1rem",
+          width: "25%",
+          backgroundColor: "#2d3748",
+          borderRadius: "0.5rem",
+          placeItems: "center",
+        }}
+      >
+        <button
+          onClick={startCalibration}
+          style={{ fontSize: "70px", padding: "20px", borderRadius: "25px" }}
+          disabled={!webgazerReady || calibrating}
+        >
           Start Calibration
         </button>
-  </div>
-  </>
+      </div>
+    </>
   );
 };
 
