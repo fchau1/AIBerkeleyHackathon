@@ -1,11 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
 import Calibration from "./Calibration";
 import "./GazeTracker.css";
+import ReadingTracker from "./readingTracker";
 
-const GazeTracker = ({setIsCalibrated}) => {
+const GazeTracker = ({ setIsCalibrated }) => {
   const gazeRef = useRef(null);
+  const leftPanelRef = useRef(null);
   const [webgazerReady, setWebgazerReady] = useState(false);
   const [calibrating, setCalibrating] = useState(false);
+  const readingTracker = useRef(new ReadingTracker({ rows: 5, cols: 5 }));
+
+  useEffect(() => {
+    if (leftPanelRef.current) {
+      const rect = leftPanelRef.current.getBoundingClientRect();
+
+      const reactPoints = new Map([
+        [1, (rect.left, rect.top)],
+        [2, ((rect.right - rect.left) / 2, rect.top)],
+        [3, (rect.right, rect.top)],
+        [4, (rect.left, (rect.top - rect.bottom) / 2)],
+        [5, ((rect.right - rect.left) / 2, (rect.top - rect.bottom) / 2)],
+        [6, (rect.right, (rect.top - rect.bottom) / 2)],
+        [7, (rect.left, rect.bottom)],
+        [8, ((rect.right - rect.left) / 2, rect.bottom)],
+        [9, (rect.right, rect.bottom)],
+      ]);
+
+      readingTracker.current.calcDiff(reactPoints);
+    }
+  }, []);
 
   useEffect(() => {
     const initWebgazer = async () => {
@@ -18,11 +41,11 @@ const GazeTracker = ({setIsCalibrated}) => {
               const { x, y } = data;
               const gazeDot = gazeRef.current;
 
-              if (gazeDot) {
-                gazeDot.style.left = x + "px";
-                gazeDot.style.top = y + "px";
-                gazeDot.style.display = "block";
-              }
+              // if (gazeDot) {
+              //   gazeDot.style.left = x + "px";
+              //   gazeDot.style.top = y + "px";
+              //   gazeDot.style.display = "block";
+              // }
             })
             .begin();
 
@@ -61,7 +84,7 @@ const GazeTracker = ({setIsCalibrated}) => {
   const handleCalibrationComplete = () => {
     setCalibrating(false);
     console.log("Calibration complete");
-    setIsCalibrated(true)
+    setIsCalibrated(true);
     // You can add additional logic here, such as storing calibration data
     window.webgazer.showPredictionPoints(false); // Hide prediction points after calibration
   };
@@ -69,6 +92,7 @@ const GazeTracker = ({setIsCalibrated}) => {
   return (
     <>
     <div
+    ref={leftPanelRef}
       className="gaze-tracker-container"
       style={{
         display: "flex",
@@ -117,8 +141,8 @@ const GazeTracker = ({setIsCalibrated}) => {
           disabled={!webgazerReady || calibrating}>
           Start Calibration
         </button>
-  </div>
-  </>
+      </div>
+    </>
   );
 };
 
