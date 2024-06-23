@@ -61,7 +61,7 @@ const ChatPanel = () => {
           </div>
         ))}
       </div>
-      <div className="input-container">
+      {/* <div className="input-container">
         <input
           type="text"
           value={input}
@@ -70,7 +70,7 @@ const ChatPanel = () => {
           placeholder="Type your message..."
         />
         <button onClick={handleSend}>Send</button>
-      </div>
+      </div> */}
     </div>
   );
 };

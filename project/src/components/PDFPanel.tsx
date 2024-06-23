@@ -13,7 +13,7 @@ interface PDFPanelProps {
 
 const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const charsPerPage = 300;
+  const charsPerPage = 310;
 
   const pageBreaks = useMemo(() => {
     const breaks = [0];
@@ -75,7 +75,7 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
           width: "75%",
           backgroundColor: "white",
           fontSize: "3.75rem",
-          border: "6px solid #ffafbd",
+          // border: "6px solid #ffafbd",
           textAlign: "left",
           lineHeight: "1.375",
           verticalAlign: "middle",
@@ -90,7 +90,7 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
             gap: "0.5rem",
             alignItems: "flex-start",
             overflowY: "auto",
-            fontSize: "7.75rem",
+            fontSize: "7.5rem",
             lineHeight: "1.375",
             textAlign: "left",
           }}
