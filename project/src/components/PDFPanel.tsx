@@ -5,16 +5,12 @@ import Tile from "./Tile";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import IconButton from "@mui/material/IconButton";
-import GazeTracker from "../calibrations/GazeTracker";
 
 interface PDFPanelProps {
   extractedText: string;
 }
 
 const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
-  const [isCalibrated, setIsCalibrated] = useState(false);
-  const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
-
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const charsPerPage = 300;
 
@@ -63,65 +59,88 @@ const PDFPanel: React.FC<PDFPanelProps> = ({ extractedText }) => {
 
   return (
     <>
-      {isCalibrated ? (
+      {/* {isCalibrated ? ( */}
+      <div
+        style={{
+          display: "flex",
+
+          flexDirection: "column",
+          justifyContent: "space-between",
+          // margin: "auto",
+          borderRadius: "0.5rem",
+          padding: "1rem",
+          alignItems: "center",
+          gap: "0.5rem",
+          flexWrap: "wrap",
+          height: `100%`,
+          width: "75%",
+          backgroundColor: "white",
+          fontSize: "3.75rem",
+          border: "6px solid #ffafbd",
+          textAlign: "left",
+          lineHeight: "1.375",
+          verticalAlign: "middle",
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "0.5rem",
+            alignItems: "flex-start",
+            overflowY: "auto",
+            fontSize: "3.75rem",
+            lineHeight: "1.375",
+            textAlign: "left",
+          }}
+        >
+          {tiles.map((tile, index) => (
+            <Tile key={index} tile={tile} />
+          ))}
+        </div>
+
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            height: "100%",
-            width: "75%",
-            margin: "auto",
-            backgroundColor: "#2d3748",
-            borderRadius: "0.5rem",
-            padding: "1rem",
-            border: "2px solid white",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem",
           }}
         >
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "0.5rem",
-              alignItems: "flex-start",
-              overflowY: "auto",
-              fontSize: "3.75rem",
-              lineHeight: "1.375",
-              textAlign: "left",
-            }}
+          <IconButton onClick={handlePrevious} disabled={currentPageIndex <= 0}>
+            <ArrowBackIosNewIcon />
+          </IconButton>
+          <IconButton
+            onClick={handleNext}
+            disabled={currentPageIndex >= pages - 1}
           >
-            {tiles.map((tile, index) => (
-              <Tile key={index} tile={tile} />
-            ))}
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "1rem",
-            }}
-          >
-            <IconButton
-              onClick={handlePrevious}
-              disabled={currentPageIndex <= 0}
-            >
-              <ArrowBackIosNewIcon />
-            </IconButton>
-            <IconButton
-              onClick={handleNext}
-              disabled={currentPageIndex >= pages - 1}
-            >
-              <ArrowForwardIosIcon />
-            </IconButton>
-          </div>
+            <ArrowForwardIosIcon />
+          </IconButton>
         </div>
-      ) : (
-        <GazeTracker windowHeight={windowHeight} />
-      )}
+      </div>
+      <div
+        style={{
+          height: "1px",
+          backgroundColor: "#d1d5db",
+          margin: "1rem 0",
+        }}
+      ></div>{" "}
+      <div
+        style={{
+          display: "grid",
+          height: "100%",
+          padding: "1rem",
+          width: "25%",
+          backgroundColor: "#ff007f",
+          borderRadius: "0.5rem",
+          placeItems: "center",
+        }}
+      ></div>
+      {/* ): (
+        <GazeTracker windowHeight={windowHeight}/>
+      )} */}
     </>
   );
 };

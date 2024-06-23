@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Calibration from "./Calibration";
 import "./GazeTracker.css";
 
-const GazeTracker = ({ windowHeight }) => {
+const GazeTracker = () => {
   const gazeRef = useRef(null);
   const [webgazerReady, setWebgazerReady] = useState(false);
   const [calibrating, setCalibrating] = useState(false);
@@ -66,6 +66,7 @@ const GazeTracker = ({ windowHeight }) => {
   };
 
   return (
+    <>
     <div
       className="gaze-tracker-container"
       style={{
@@ -84,12 +85,12 @@ const GazeTracker = ({ windowHeight }) => {
       }}
     >
       <div className="controls">
-        <button
+        {/* <button
           onClick={startCalibration}
           disabled={!webgazerReady || calibrating}
         >
           Start Calibration
-        </button>
+        </button> */}
       </div>
       {calibrating && (
         <Calibration
@@ -99,6 +100,31 @@ const GazeTracker = ({ windowHeight }) => {
       )}
       <div ref={gazeRef} className="gaze-dot" />
     </div>
+    <div
+    style={{
+      height: "1px",
+      backgroundColor: "#d1d5db",
+      margin: "1rem 0",
+    }}
+  ></div>{" "}
+  <div
+    style={{
+      display: "grid",
+      height: "100%",
+      padding: "1rem",
+      width: "25%",
+      backgroundColor: "#2d3748",
+      borderRadius: "0.5rem",
+      placeItems: "center",
+    }}
+  >
+    <button onClick={startCalibration}
+          style={{fontSize:"70px", padding: "20px", borderRadius: "25px"}}
+          disabled={!webgazerReady || calibrating}>
+          Start Calibration
+        </button>
+  </div>
+  </>
   );
 };
 
