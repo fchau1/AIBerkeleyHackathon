@@ -13,4 +13,8 @@ pypdf
 streamlit
 langchain_openai
 langchain-community
+#Middleware
+flask
+flask-socketio
+eventlet
 # dlib-binary
