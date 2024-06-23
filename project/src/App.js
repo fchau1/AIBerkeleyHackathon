@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ReadScreen from "./components/ReadScreen";
 import pdfToText from "react-pdftotext";
 import heroImg from "./heroImg.jpg";
+import { MessageProvider } from './contexts/MessageContext';
 
 function App() {
   const [submitPDF, setSubmitPDF] = useState(false);
@@ -26,6 +27,7 @@ function App() {
   useEffect(() => {}, [submitPDF]);
 
   return (
+    <MessageProvider>
     <div
       style={{
         display: "flex",
@@ -99,6 +101,7 @@ function App() {
         </>
       )}
     </div>
+    </MessageProvider>
   );
 }
 

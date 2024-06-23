@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Calibration from "./Calibration";
 import "./GazeTracker.css";
 
-const GazeTracker = () => {
+const GazeTracker = ({setIsCalibrated}) => {
   const gazeRef = useRef(null);
   const [webgazerReady, setWebgazerReady] = useState(false);
   const [calibrating, setCalibrating] = useState(false);
@@ -61,6 +61,7 @@ const GazeTracker = () => {
   const handleCalibrationComplete = () => {
     setCalibrating(false);
     console.log("Calibration complete");
+    setIsCalibrated(true)
     // You can add additional logic here, such as storing calibration data
     window.webgazer.showPredictionPoints(false); // Hide prediction points after calibration
   };
